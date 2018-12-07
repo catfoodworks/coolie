@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
 
 public class ContextDirective extends AbstractDirective {
 
@@ -26,10 +27,11 @@ public class ContextDirective extends AbstractDirective {
     @Override
     protected void doExecute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body) throws TemplateException, IOException {
         IntrospectedTable table = DirectiveUtil.getTable(env);
-        env.setVariable(TABLE_NAME, new StringModel(table.getName(), beansWrapper));
-        env.setVariable(CLASS_NAME, new StringModel(JavaBeansUtil.getCamelCaseString(table.getName(), true), beansWrapper));
-        env.setVariable(CLASS_NAME_FCUC, new StringModel(JavaBeansUtil.getCamelCaseString(table.getName(), true), beansWrapper));
-        env.setVariable(CLASS_NAME_FCLC, new StringModel(JavaBeansUtil.getCamelCaseString(table.getName(), false), beansWrapper));
+        String tableName = Objects.nonNull(table) ? table.getName() : "";
+        env.setVariable(TABLE_NAME, new StringModel(tableName, beansWrapper));
+        env.setVariable(CLASS_NAME, new StringModel(JavaBeansUtil.getCamelCaseString(tableName, true), beansWrapper));
+        env.setVariable(CLASS_NAME_FCUC, new StringModel(JavaBeansUtil.getCamelCaseString(tableName, true), beansWrapper));
+        env.setVariable(CLASS_NAME_FCLC, new StringModel(JavaBeansUtil.getCamelCaseString(tableName, false), beansWrapper));
 
         String type = getParamAsString(params, P_TYPE);
         if(StringUtils.isBlank(type))

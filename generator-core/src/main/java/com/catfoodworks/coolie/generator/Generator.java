@@ -16,12 +16,14 @@ import com.github.abel533.database.IntrospectedTable;
 import com.github.abel533.utils.DBMetadataUtils;
 import com.github.abel533.utils.JavaBeansUtil;
 import freemarker.template.TemplateException;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class Generator {
 
@@ -49,12 +51,21 @@ public class Generator {
                 if (!module.isEnable())
                     continue;
 
-                DatabaseConfig dbConfig = new DatabaseConfig(null, null, module.getTable());
-                IntrospectedTable introspectedTable = dbMetadataUtils.introspectTables(dbConfig).get(0);
+                IntrospectedTable introspectedTable = null;
+                if (StringUtils.isNotBlank(module.getTable())) {
+                    DatabaseConfig dbConfig = new DatabaseConfig(null, null, module.getTable());
+                    introspectedTable = dbMetadataUtils.introspectTables(dbConfig).get(0);
+                }
+
 
                 for (ComponentBO component : module.getComponents()) {
                     if (!component.isEnable())
                         continue;
+
+                    if (StringUtils.isBlank(module.getTable())) {
+                        introspectedTable = new IntrospectedTable();
+                        introspectedTable.setName(component.getName());
+                    }
 
                     CodeTemplate codeTemplate = this.codeTemplateFactory.getCodeTemplate(component.getTemplate());
                     String namespace = String.join(".", module.getNamespace(), component.getNamespace());
@@ -64,7 +75,14 @@ public class Generator {
                     if(!dir.exists()) {
                         dir.mkdirs();
                     }
-                    String fileName = JavaBeansUtil.getCamelCaseString(introspectedTable.getName(), true);
+
+                    String fileName;
+                    if (StringUtils.isBlank(module.getTable())) {
+                        fileName = JavaBeansUtil.getCamelCaseString(component.getName(), true);
+                    } else {
+                        fileName = JavaBeansUtil.getCamelCaseString(introspectedTable.getName(), true);
+                    }
+
                     String pathName = dir.getAbsolutePath() + "/" + fileName + component.getSubFix();
                     File outputFile = new File(pathName);
 
@@ -73,6 +91,7 @@ public class Generator {
                     codeTemplate.addVariables(component.getVariables());
 
                     codeTemplate.print(outputFile);
+                    logger.info("file generated: {}", outputFile.getAbsolutePath());
                 }
             }
         } catch (IllegalAccessException e) {
