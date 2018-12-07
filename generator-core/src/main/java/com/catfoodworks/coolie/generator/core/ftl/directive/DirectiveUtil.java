@@ -6,7 +6,10 @@ import com.github.abel533.database.IntrospectedColumn;
 import com.github.abel533.database.IntrospectedTable;
 import freemarker.core.Environment;
 import freemarker.ext.beans.StringModel;
+import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
+
+import java.util.Objects;
 
 public class DirectiveUtil {
 
@@ -22,7 +25,11 @@ public class DirectiveUtil {
     }
 
     public static IntrospectedTable getTable(Environment environment) throws TemplateModelException {
-        return (IntrospectedTable)((StringModel)environment.getVariable("table")).getWrappedObject();
+        TemplateModel table = environment.getVariable("table");
+        if (Objects.nonNull(table))
+            return (IntrospectedTable)((StringModel) table).getWrappedObject();
+        else
+            return null;
     }
 
 }

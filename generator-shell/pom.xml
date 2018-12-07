@@ -41,13 +41,6 @@
                 <configuration>
                     <mainClass>com.catfoodworks.coolie.generator.shell.App</mainClass>
                 </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

@@ -1,0 +1,147 @@
+{
+  "name": "coolie-example",
+  "location": "example/generated/catfoodworks/coolie/project/",
+  "configuration": {
+    "typeMap": {
+      "TINYINT": "java.lang.Integer",
+      "BIT": "java.lang.Integer"
+    }
+  },
+  "connections": [
+    {
+      "name": "mysql",
+      "protocol": "jdbc:mysql:",
+      "host": "127.0.0.1",
+      "port": "3306",
+      "schema": "coolie",
+      "query": "autoReconnect=true",
+      "user": "root",
+      "auth": "123456"
+    }
+  ],
+  "components": [
+    {
+      "name": "model",
+      "path": "/src/main/java",
+      "namespace": "model",
+      "template": "model.ftl",
+      "subFix": ".java"
+    },
+    {
+      "name": "model_example",
+      "path": "/src/main/java/",
+      "namespace": "model",
+      "template": "model_example.ftl",
+      "subFix": "Example.java"
+    },
+    {
+      "name": "mapper_client",
+      "path": "/src/main/java",
+      "namespace": "mapper",
+      "template": "mapper_client.ftl",
+      "subFix": "Mapper.java"
+    },
+    {
+      "name": "mapper_xml",
+      "path": "/src/main/resources",
+      "namespace": "mapper",
+      "template": "mapper_xml.ftl",
+      "subFix": "Mapper.xml"
+    },
+    {
+      "name": "component",
+      "path": "/src/main/java",
+      "namespace": "component",
+      "template": "component.ftl",
+      "subFix": "Component.java"
+    }
+  ],
+  "modules": [
+    {
+      "name": "common",
+      "path": "/module-common",
+      "namespace": "com.catfoodworks.coolie.example",
+      "enable": true,
+      "components": [
+        {
+          "name": "cmmon_crud_mapper",
+          "path": "/src/main/java",
+          "namespace": "common",
+          "template": "common_crud_mapper.ftl",
+          "subFix": ".java",
+          "enable": true
+        },
+        {
+          "name": "id_util",
+          "path": "/src/main/java",
+          "namespace": "common.util",
+          "template": "id_util.ftl",
+          "subFix": ".java",
+          "enable": true
+        },
+        {
+          "name": "user_type",
+          "path": "/src/main/java",
+          "namespace": "common.constance",
+          "template": "user_type.ftl",
+          "subFix": ".java",
+          "enable": true
+        }
+      ]
+    },
+    {
+      "name": "user",
+      "path": "/module-user",
+      "namespace": "com.catfoodworks.coolie.example.user",
+      "table": "user",
+      "enable": true,
+      "configuration":{
+        "nameMap": {
+          "user_type": "com.catfoodworks.coolie.example.constance.UserType"
+        }
+      },
+      "components": [
+        {
+          "name": "model",
+          "enable": true,
+          "variables": {
+            "custom_imports": [
+              "com.catfoodworks.coolie.example.constance.UserType"
+            ]
+          }
+        },
+        {
+          "name": "model_example",
+          "enable": true,
+          "variables": {
+            "custom_imports": [
+              "com.catfoodworks.coolie.example.constance.UserType"
+            ]
+          }
+        },
+        {
+          "name": "mapper_client",
+          "enable": true,
+          "variables": {
+            "model_package": "com.catfoodworks.coolie.example.component.user.model"
+          }
+        },
+        {
+          "name": "mapper_xml",
+          "enable": true,
+          "variables": {
+            "model_package": "com.catfoodworks.coolie.example.component.user.model"
+          }
+        },
+        {
+          "name": "component",
+          "enable": true,
+          "variables": {
+            "model_package": "com.catfoodworks.coolie.example.component.user.model",
+            "mapper_package": "com.catfoodworks.coolie.example.component.user.mapper"
+          }
+        }
+      ]
+    }
+  ]
+}

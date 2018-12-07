@@ -14,10 +14,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class ClassDirective extends AbstractDirective {
 
     private static final String P_TYPE = "type";
+    private static final String P_NAME = "name";
     private static final String P_PREFIX = "prefix";
     private static final String P_SUFFIX = "suffix";
     private static final String P_ANNOTATION = "annotation";
@@ -26,6 +28,7 @@ public class ClassDirective extends AbstractDirective {
 
     private static final String TYPE_CLASS = "class";
     private static final String TYPE_INTERFACE = "interface";
+    private static final String TYPE_ENUM = "enum";
 
     public ClassDirective(CodeTemplateConfig config) {
         super(config);
@@ -99,6 +102,8 @@ public class ClassDirective extends AbstractDirective {
             classType = "class";
         else if(TYPE_INTERFACE.equals(type))
             classType = "interface";
+        else if(TYPE_ENUM.equals(type))
+            classType = "enum";
 
         String className = prefix + JavaBeansUtil.getCamelCaseString(table.getName(), true) + suffix;
 
