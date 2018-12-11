@@ -89,7 +89,7 @@ public class Generator {
                     codeTemplate.addVariables(component.getVariables());
 
                     codeTemplate.print(outputFile);
-                    logger.info("file generated: {}", outputFile.getAbsolutePath());
+                    System.out.println(String.format("file generated: %s", outputFile.getAbsolutePath()));
                 }
             }
         } catch (IllegalAccessException e) {

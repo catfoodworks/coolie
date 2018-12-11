@@ -1,6 +1,6 @@
 {
   "name": "coolie-example",
-  "location": "example/generated/catfoodworks/coolie/project/",
+  "location": "generated/catfoodworks/coolie/project/",
   "configuration": {
     "typeMap": {
       "TINYINT": "java.lang.Integer",

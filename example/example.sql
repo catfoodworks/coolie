@@ -14,6 +14,6 @@ CREATE TABLE `user` (
   `active` tinyint(4) NOT NULL DEFAULT '1',
   `user_type` varchar(8) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `acount_UNIQUE` (`account`),
+  UNIQUE KEY `account_UNIQUE` (`account`),
   UNIQUE KEY `phone_UNIQUE` (`phone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
