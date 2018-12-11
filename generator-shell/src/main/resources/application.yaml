@@ -1,0 +1,8 @@
+coolie:
+  info:
+    name: Coolie the generator
+    description: A code generator for java project.
+    version: 0.4.0
+    author: Drol
+    mail: catfoodworks@gmail.com
+    github: https://github.com/catfoodworks/coolie.git

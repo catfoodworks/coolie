@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Objects;
 
 public class Generator {
 
@@ -56,7 +55,6 @@ public class Generator {
                     DatabaseConfig dbConfig = new DatabaseConfig(null, null, module.getTable());
                     introspectedTable = dbMetadataUtils.introspectTables(dbConfig).get(0);
                 }
-
 
                 for (ComponentBO component : module.getComponents()) {
                     if (!component.isEnable())

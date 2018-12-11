@@ -33,4 +33,9 @@ public class App {
         return new Generator(codeTemplateFactory);
     }
 
+    @Bean
+    public Info info() {
+        return new Info();
+    }
+
 }
